@@ -15,7 +15,7 @@ Para mais informações, acesse a documentação da biblioteca.
 
 Execute o comando `npm start`.
 
-# Tecnologias
+### Tecnologias
 
 + **ReactJS**: biblioteca JavaScript declarativa, eficiente e flexível para a criação de interfaces de usuário (UI)
 + **Redux**: controlador de estados geral e centralizado
