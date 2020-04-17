@@ -7,6 +7,8 @@ import {
   MdDelete,
 } from 'react-icons/md';
 
+import { Confirm, Alert } from '../../components/Dialogs/Alert';
+
 import * as CartActions from '../../store/modules/cart/actions';
 import { formatPrice } from '../../util/format';
 
@@ -21,12 +23,12 @@ export default function Cart() {
     );
   });
 
-  const cart = useSelector((state) => {
+  const cart = useSelector((state) =>
     state.cart.map((product) => ({
       ...product,
       subtotal: formatPrice(product.price * product.amount),
-    }));
-  });
+    }))
+  );
 
   const dispatch = useDispatch();
 
@@ -87,7 +89,22 @@ export default function Cart() {
                     size={20}
                     color="#7159c1"
                     onClick={() =>
-                      dispatch(CartActions.removeFromCart(product.id))
+                      Confirm.fire({
+                        title: 'Tem certeza?',
+                        text:
+                          'Você deseja realmente remover esse item do carrinho?',
+                        icon: 'warning',
+                        confirmButtonText: 'Remover do carrinho',
+                      }).then((result) => {
+                        if (result.value) {
+                          dispatch(CartActions.removeFromCart(product.id));
+                          Alert.fire(
+                            'Pronto!',
+                            'O item já foi removido do seu carrinho.',
+                            'success'
+                          );
+                        }
+                      })
                     }
                   />
                 </button>
